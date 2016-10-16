@@ -1,4 +1,4 @@
-from algorithm import algo
+from algorithm.algo import shotCaller
 
 def returnJSON(orig, dest):
-    return algo.shotCaller(orig, dest)
+    return shotCaller(orig, dest)
