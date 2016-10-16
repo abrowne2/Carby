@@ -32,6 +32,7 @@ def processInput(origin, destination, type):
 
     #ensure that the data we're about to parse actually exists...
     #we might not have a public transit route, for example..
+    transportation = []
     if(data['status'] != 'ZERO_RESULTS'):
         #append the total distance taken and the duration of time
 
@@ -41,17 +42,17 @@ def processInput(origin, destination, type):
         dist = data['routes'][0]['legs'][0]['distance']['text']
 
         #the first data should be that of the total distance, time, and cost required.
-        transportation = {'distance': dist, 'time':
+        transportation = [{'distance': dist, 'time':
             data['routes'][0]['legs'][0]['duration']['text'], 'cost':
-            computeGas(lat, lon, float(dist.replace("mi", "").strip()), str(type))}
+            computeGas(lat, lon, float(dist.replace("mi", "").strip()), str(type))}]
 
         #iterate over the response, creating individual dictionaries for each step.
         #if we want data for the entire step by step process and the maneuver:
 
-        # for steps in data['routes'][0]['legs'][0]['steps']:
-        #     transportation.append({'step': maneuver(steps['maneuver']) if 'maneuver' in steps else '',
-        #                     'dist': steps['distance'], 'time': steps['duration'], 'mode': steps['travel_mode'],
-        #                     'words': stepParse(steps['html_instructions'])})
+        for steps in data['routes'][0]['legs'][0]['steps']:
+            transportation.append({'step': maneuver(steps['maneuver']) if 'maneuver' in steps else '',
+                            'dist': steps['distance'], 'time': steps['duration'], 'mode': steps['travel_mode'],
+                            'words': stepParse(steps['html_instructions'])})
     return transportation
 
 #use stepParse to parse the html instruction in the API response
