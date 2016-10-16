@@ -12,11 +12,7 @@ https://carbonfund.org/how-we-calculate/
 
 #green score algo
 def greenScore(gallons, dist, type):
-    if type == 'driving':
+    if type == 'driving' or 'transit':
         return 8.89 * gallons
-    elif type == 'transit':
-        return 8.89 * gallons
-    elif type == 'bicycling':
-        return 0.012 * dist
-    elif type == 'walking':
-        return (0.029 * dist)
+    else:
+        return 0
