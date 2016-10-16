@@ -51,8 +51,6 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
@@ -151,6 +149,9 @@ public class PriorityActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+                Intent i = new Intent(PriorityActivity.this, SimplePieChartActivity.class);
+                startActivity(i);
 //                Toast.makeText(getApplicationContext(), request, Toast.LENGTH_LONG).show();
             }
         });

@@ -13,5 +13,7 @@
 # and specify the fully qualified class name to the JavaScript interface
 # class:
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
+#-keep class com.androidplot.** { *; }
 #   public *;
 #}
+-keep class com.androidplot.** { *; }
