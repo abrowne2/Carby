@@ -1,3 +1,3 @@
-DEBUG = False
-SECRET_KEY = 'mysecretkey'
-DATABASE_URI = 'sqlite:////tmp/myapp.db'
+env = {}
+env['host'] = '0.0.0.0'
+env['port'] = 3000

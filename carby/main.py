@@ -20,6 +20,4 @@ def main_route():
             print(e.args)
 
     elif request.method == 'GET':
-        if request.args.get('hub.verify_token') == config.env['verify_token']:
-            return request.args.get('hub.challenge')
-        return "Wrong Verify Token"
+        return "Yeah, this is a get request"
