@@ -1,6 +1,7 @@
+import sys
+sys.path.insert(0, './algorithm')
 import algorithm.cost
 import json, requests
-
 #google maps direction api key
 api_key = 'AIzaSyDHJZtEP1pvZuQfC6_I8gGMB1gBK9eXhHI'
 
