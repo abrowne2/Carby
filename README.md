@@ -24,4 +24,6 @@ bottom: Search another route.
 
 after results are generated and pushed to the screen for the user to see, an option at the bottom of the screen is used to help users select a different priority ranking for a different travel route. 
 
-
+![alt tag](https://github.com/abrowne2/Carby/blob/master/screenshots/splash.png)
+![alt tag](https://github.com/abrowne2/Carby/blob/master/screenshots/priority.png)
+![alt tag](https://github.com/abrowne2/Carby/blob/master/screenshots/visualization.png)
