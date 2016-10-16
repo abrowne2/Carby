@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, '.')
+sys.path.insert(0, './algorithm')
 from algorithm.cost import computeGas
 import json, requests
 
