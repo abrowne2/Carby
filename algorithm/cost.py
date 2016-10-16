@@ -1,4 +1,6 @@
 from bs4 import BeautifulSoup
+import sys
+sys.path.insert(1, '.')
 import requests
 from .green import greenScore
 '''
