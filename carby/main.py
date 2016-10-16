@@ -4,6 +4,8 @@ sys.path.insert(0, '.')
 import config, json, traceback, requests
 
 
+token = config.env['access_token']
+
 main = Blueprint('main', __name__)
 
 @main.route('/', methods=['GET', 'POST'])
@@ -13,8 +15,8 @@ def main_route():
             payload = request.get_json()
             print(payload)
             #parse the payload below, and then we'll use our 'computation' module
-            return "okay"
 
+            return "okay"
         except Exception as e:
             print(type(e))
             print(e.args)
