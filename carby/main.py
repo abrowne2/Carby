@@ -15,6 +15,7 @@ def main_route():
         three = request.args.get('three'); four = request.args.get('four')
         return returnJSON(origin, destination)
 
+#ensure that the response headers are set to return application/json.
 @main.after_request
 def apply_json(response):
     response.headers['content-type'] = 'application/json'
