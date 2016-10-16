@@ -1,5 +1,3 @@
-import sys
-sys.path.insert(1, '.')
 from algorithm.cost import computeGas
 import json, requests
 
