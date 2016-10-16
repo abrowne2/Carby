@@ -1,5 +1,5 @@
 import sys
-from algorithm.cost import computeGas
+from .cost import computeGas
 import json, requests
 
 #google maps direction api key
