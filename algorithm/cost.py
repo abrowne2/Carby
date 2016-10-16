@@ -1,6 +1,5 @@
 from bs4 import BeautifulSoup
-import requests, sys
-sys.path.insert(0, './algorithm')
+import requests
 from algorithm.green import greenScore
 
 '''
