@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
-from algorithm import green
-import requests
+import requests, sys
+sys.path.insert(0, '.')
+from algorithm.green import greenScore
 
 '''
 https://truecostblog.com/2010/05/27/fuel-efficiency-modes-of-transportation-ranked-by-mpg/
@@ -41,7 +42,7 @@ def computeGas(lat, lon, dist, type):
         gas['cost'] = (tank * float(Regular)) * refuels
         #number of refuels, if greater than 1.
         gas['refuel'] = refuels if refuels >= 1.0 else 0
-        gas['green'] = green.greenScore(refuels, dist, type)
+        gas['green'] = greenScore(refuels, dist, type)
         #how many trees needed to plant
         gas['trees'] = 0.0584 * dist
 
@@ -56,14 +57,14 @@ def computeGas(lat, lon, dist, type):
         gas['cost'] = (tank * float(Regular)) * refuels
         gas['refuel'] = refuels if refuels >= 1.0 else 0
         #compute the green score.
-        gas['green'] = green.greenScore(refuels, dist, type)
+        gas['green'] = greenScore(refuels, dist, type)
         #how many trees you would need to plant (0.0584 per mile)
         gas['trees'] = 0.0584 * dist
 
     elif type == 'walking':
-        gas['green'] = green.greenScore(0, dist, type)
+        gas['green'] = greenScore(0, dist, type)
     elif type == 'bicycling':
-        gas['green'] = green.greenScore(0, dist, type)
+        gas['green'] = greenScore(0, dist, type)
 
     #gas can also contain the green score...
     return gas

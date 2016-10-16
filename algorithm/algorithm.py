@@ -1,4 +1,6 @@
-from algorithm import cost
+import sys
+sys.path.insert(0, '.')
+from algorithm.cost import computeGas
 import json, requests
 
 #google maps direction api key
@@ -36,10 +38,10 @@ def processInput(origin, destination, type):
     #we might not have a public transit route, for example..
     if(data['status'] != 'ZERO_RESULTS'):
         #append the total distance taken and the duration of time
-        computeGas = True if type is 'driving' or 'transit' else False
+        gasFlag = True if type is 'driving' or 'transit' else False
 
         #store the end_location's latitude and longitutde, used for cost computation:
-        if computeGas:
+        if gasFlag:
             lat = data['routes'][0]['legs'][0]['end_location']['lat']
             lon = data['routes'][0]['legs'][0]['end_location']['lng']
         dist = data['routes'][0]['legs'][0]['distance']['text']
@@ -47,7 +49,7 @@ def processInput(origin, destination, type):
         #the first data should be that of the total distance, time, and cost required.
         transportation.append({'distance': dist, 'time':
             data['routes'][0]['legs'][0]['duration']['text'], 'cost':
-            cost.computeGas(lat, lon, float(dist.replace("mi", "").strip()), type)})
+            computeGas(lat, lon, float(dist.replace("mi", "").strip()), type)})
 
         #iterate over the response, creating individual dictionaries for each step.
         for steps in data['routes'][0]['legs'][0]['steps']:
@@ -65,6 +67,3 @@ def stepParse(instruction):
 #typically the maneuver involves "fork-right"
 def maneuver(step):
     return ' '.join(step.split('-'))
-
-
-shotCaller("9605 Tanager Drive, Chardon, OH","437 Sumner Street, Akron, OH")
