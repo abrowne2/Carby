@@ -1,7 +1,7 @@
 #gitignore for the android app
 /build
 /libs
-Android/Dubhacks
+Android/DubHacks/*
 app.iml
 build.gradle
 proguard-rules.pro
