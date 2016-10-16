@@ -15,6 +15,6 @@ def greenScore(gallons, dist, type):
     if type == 'driving' or 'transit':
         return 8.89 * gallons
     elif type == 'bicycling':
-        return 0.012 * float(dist)
+        return float(0.012 * dist)
     elif type == 'walking':
-        return 0.029 * float(dist)
+        return float(0.029 * dist)
