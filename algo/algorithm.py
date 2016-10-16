@@ -30,8 +30,6 @@ def processInput(origin, destination, type):
 
     data = json.loads(r.text)
 
-    #create the transport list.
-    transportation = []
     #ensure that the data we're about to parse actually exists...
     #we might not have a public transit route, for example..
     if(data['status'] != 'ZERO_RESULTS'):
