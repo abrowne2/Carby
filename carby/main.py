@@ -11,6 +11,7 @@ def main_route():
     if request.method == 'POST':
         try:
             payload = request.get_json()
+            print(payload)
             #parse the payload below, and then we'll use our 'computation' module
             return "okay"
 

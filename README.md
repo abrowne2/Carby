@@ -1,5 +1,3 @@
-# Carby Plan
-
 #Step 1
 - Take input for starting point & destination
 - (Potential) allow user to enter & rate preferences on their green route
