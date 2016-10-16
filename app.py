@@ -1,6 +1,6 @@
 from flask import Flask
 import config
-from messenger.main import main
+from carby.main import main
 
 app = Flask(__name__)
 

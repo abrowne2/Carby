@@ -4,8 +4,6 @@ sys.path.insert(0, '.')
 import config, json, traceback, requests
 
 
-token = config.env['access_token']
-
 main = Blueprint('main', __name__)
 
 @main.route('/', methods=['GET', 'POST'])
