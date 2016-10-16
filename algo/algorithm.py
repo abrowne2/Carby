@@ -50,10 +50,10 @@ def processInput(origin, destination, type):
             computeGas(lat, lon, float(dist.replace("mi", "").strip()), type)})
 
         #iterate over the response, creating individual dictionaries for each step.
-        for steps in data['routes'][0]['legs'][0]['steps']:
-            transportation.append({'step': maneuver(steps['maneuver']) if 'maneuver' in steps else '',
-                            'dist': steps['distance'], 'time': steps['duration'], 'mode': steps['travel_mode'],
-                            'words': stepParse(steps['html_instructions'])})
+        # for steps in data['routes'][0]['legs'][0]['steps']:
+        #     transportation.append({'step': maneuver(steps['maneuver']) if 'maneuver' in steps else '',
+        #                     'dist': steps['distance'], 'time': steps['duration'], 'mode': steps['travel_mode'],
+        #                     'words': stepParse(steps['html_instructions'])})
     return transportation
 
 #use stepParse to parse the html instruction in the API response
