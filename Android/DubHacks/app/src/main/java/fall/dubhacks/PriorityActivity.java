@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -40,6 +42,7 @@ public class PriorityActivity extends AppCompatActivity {
     ImageButton recycle, go;
 
     LinearLayout carbonC, costC, distanceC, timeC, box1C, box2C, box3C, box4C;
+    EditText start, destination;
 
     Bitmap bitmap;
     Canvas canvas;
@@ -60,6 +63,7 @@ public class PriorityActivity extends AppCompatActivity {
         setContentView(R.layout.activity_priority);
 
         initAssets();
+        renderSpaces();
     }
 
     private void initAssets() {
@@ -77,9 +81,33 @@ public class PriorityActivity extends AppCompatActivity {
         go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), getPopulatedString(), Toast.LENGTH_SHORT).show();
+                //https://carby1.herokuapp.com/api?origin=&destination=&one=&two=&three=&four=
+                String origin = start.getText().toString();
+                String dest = destination.getText().toString();
+
+                String one = charToString(populated[0]);
+                check(one);
+                String two = charToString(populated[1]);
+                check(two);
+                String three = charToString(populated[2]);
+                check(three);
+                String four = charToString(populated[3]);
+                check(four);
+
+                String request = ("https://carby1.herokuapp.com/api?" +
+                        "origin="+origin+"" +
+                        "&destination="+dest+"" +
+                        "&one="+one+"" +
+                        "&two="+two+"" +
+                        "&three="+three+"" +
+                        "&four="+four);
+
+                Toast.makeText(getApplicationContext(), request, Toast.LENGTH_LONG).show();
             }
         });
+
+        start = (EditText) findViewById(R.id.starting);
+        destination = (EditText) findViewById(R.id.ending);
 
         //Listeners for our actual images to be moves
         carbonFootprint = (ImageView) findViewById(R.id.carbonFootprintIMG);
@@ -104,41 +132,70 @@ public class PriorityActivity extends AppCompatActivity {
 
         //listeners for all 8 containers possible to move to
         carbonC = (LinearLayout) findViewById(R.id.cfContainer);
-        carbonC.setOnDragListener(new MyDragListener(active, 'a'));
+        carbonC.setOnDragListener(new MyDragListener('a'));
 
         costC = (LinearLayout) findViewById(R.id.costContainer);
-        costC.setOnDragListener(new MyDragListener(active, 'b'));
+        costC.setOnDragListener(new MyDragListener('b'));
 
         distanceC = (LinearLayout) findViewById(R.id.distanceContainer);
-        distanceC.setOnDragListener(new MyDragListener(active, 'c'));
+        distanceC.setOnDragListener(new MyDragListener('c'));
 
         timeC = (LinearLayout) findViewById(R.id.timeContainer);
-        timeC.setOnDragListener(new MyDragListener(active, 'd'));
+        timeC.setOnDragListener(new MyDragListener('d'));
 
         box1C = (LinearLayout) findViewById(R.id.box1Container);
-        box1C.setOnDragListener(new MyDragListener(active, 'e'));
-        box1C.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), box1C.getContentDescription(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        box1C.setOnDragListener(new MyDragListener('e'));
 
         box2C = (LinearLayout) findViewById(R.id.box2Container);
-        box2C.setOnDragListener(new MyDragListener(active, 'f'));
+        box2C.setOnDragListener(new MyDragListener('f'));
 
         box3C = (LinearLayout) findViewById(R.id.box3Container);
-        box3C.setOnDragListener(new MyDragListener(active, 'g'));
+        box3C.setOnDragListener(new MyDragListener('g'));
 
         box4C = (LinearLayout) findViewById(R.id.box4Container);
-        box4C.setOnDragListener(new MyDragListener(active, 'h'));
+        box4C.setOnDragListener(new MyDragListener('h'));
     }
 
     private void renderSpaces(){
-
+        long downTime = SystemClock.uptimeMillis();
+        long eventTime = SystemClock.uptimeMillis() + 100;
+        float x = 230.0f;
+        float y = 720.0f;
+// List of meta states found here:     developer.android.com/reference/android/view/KeyEvent.html#getMetaState()
+        int metaState = 0;
+        MotionEvent motionEvent = MotionEvent.obtain(
+                downTime,
+                eventTime,
+                MotionEvent.ACTION_UP,
+                x,
+                y,
+                metaState);
     }
+
+    private void check(String s){
+        if (s.equals("null")){
+            //do something
+        }
+    }
+
     private String getPopulatedString(){
         return ("Populated fields are " + populated[0] + " " +populated[1] + " " +populated[2]+ " " +populated[3]);
+    }
+
+    private String charToString(char z){
+        if(z == 'e'){
+            return "green";
+        }
+        else if(z == 'f'){
+            return "cost";
+        }
+        else if(z == 'g'){
+            return "distance";
+        }
+        else if(z == 'h'){
+            return "time";
+        }
+        else return "null";
     }
 
     // This defines your touch listener
@@ -178,7 +235,7 @@ public class PriorityActivity extends AppCompatActivity {
         char box;
         boolean first = true;
 
-        private MyDragListener (char from, char dest){
+        private MyDragListener (char dest){
             this.prior = active;
             this.box = dest;
         }
@@ -186,7 +243,7 @@ public class PriorityActivity extends AppCompatActivity {
         @Override
         public boolean onDrag(View v, DragEvent event) {
             this.prior = active;
-            update();
+            //Toast.makeText(getApplicationContext(), (" Prior: "+prior+"  Box "+box), Toast.LENGTH_SHORT).show();
             int action = event.getAction();
             switch (event.getAction()) {
                 case DragEvent.ACTION_DRAG_STARTED:
@@ -199,6 +256,7 @@ public class PriorityActivity extends AppCompatActivity {
                     v.setBackgroundDrawable(normalShape);
                     break;
                 case DragEvent.ACTION_DROP:
+                    update();
                     // Dropped, reassign View to ViewGroup
                     View view = (View) event.getLocalState();
                     ViewGroup owner = (ViewGroup) view.getParent();
@@ -234,7 +292,7 @@ public class PriorityActivity extends AppCompatActivity {
                 case 'g':
                     bg = getResources().getDrawable(R.drawable.dashbox3);
                     v.setBackgroundDrawable(bg);
-                   break;
+                    break;
                 case 'h':
                     bg = getResources().getDrawable(R.drawable.dashbox4);
                     v.setBackgroundDrawable(bg);
@@ -265,7 +323,7 @@ public class PriorityActivity extends AppCompatActivity {
                         }
                     }
 
-                    Toast.makeText(getApplicationContext(), " "+box+" ", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), " "+box+" ", Toast.LENGTH_SHORT).show();
                     populated[i] = box;
                 }
             }
