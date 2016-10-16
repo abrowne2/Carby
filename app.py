@@ -1,6 +1,7 @@
 from flask import Flask
 import config
 from carby.main import main
+from algorithm import algo
 
 app = Flask(__name__)
 # Register the blueprint

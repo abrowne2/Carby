@@ -1,7 +1,5 @@
 from flask import *
-from ..algorithm import algo
-import sys
-sys.path.insert(0, '../')
+from app import algo
 import config, json, traceback, requests
 
 
