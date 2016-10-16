@@ -22,7 +22,7 @@
         <TextView
             android:text="Carby"
             android:textStyle="bold"
-            android:textSize="48dp"
+            android:textSize="64dp"
             android:paddingTop="16dp"
             android:textColor="@color/ecoGreen"
             android:gravity="center"

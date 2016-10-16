@@ -138,19 +138,19 @@ public class PriorityActivity extends AppCompatActivity {
 
                 String request = ("https://carby1.herokuapp.com/api?origin=" + origin + "&destination=" +
                         dest + "&one=" + one + "&two=" + two + "&three=" + three + "&four=" + four);
-                try {
-                    //JSONObject json = readJsonFromUrl(request);
-                    JSONObject json = new JSONObject(IOUtils.toString(new URL(request), Charset.forName("UTF-8")));
-                    //print the car json object to the console for testing.
-                    System.out.println("Here is the car data: " + json.getJSONObject("car"));
-                    System.out.println("The walking data: " + json.getJSONObject("walking"));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    //JSONObject json = readJsonFromUrl(request);
+//                    JSONObject json = new JSONObject(IOUtils.toString(new URL(request), Charset.forName("UTF-8")));
+//                    //print the car json object to the console for testing.
+//                    System.out.println("Here is the car data: " + json.getJSONObject("car"));
+//                    System.out.println("The walking data: " + json.getJSONObject("walking"));
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
 
-                Intent i = new Intent(PriorityActivity.this, SimplePieChartActivity.class);
+                Intent i = new Intent(PriorityActivity.this, xyActivity.class);
                 startActivity(i);
 //                Toast.makeText(getApplicationContext(), request, Toast.LENGTH_LONG).show();
             }
@@ -308,11 +308,6 @@ public class PriorityActivity extends AppCompatActivity {
         public MyTouchListener(char act) {
             this.act = act;
             active = act;
-            try {
-                //Toast.makeText(getApplicationContext(), " "+active+" ", Toast.LENGTH_SHORT).show();
-            } catch (Exception e) {
-
-            }
         }
 
         public boolean onTouch(View view, MotionEvent motionEvent) {
