@@ -6,9 +6,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.Charset;
 import java.util.Map;
 
 import android.app.Activity;
@@ -16,9 +18,11 @@ import android.content.ClipData;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -41,6 +45,17 @@ import android.view.View.OnTouchListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.apache.commons.io.IOUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by Bum Mobile on 10/15/2016.
@@ -67,6 +82,11 @@ public class PriorityActivity extends AppCompatActivity {
     private char[] populated = {'a', 'b', 'c', 'd'};
 
     public char active = 'z';
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +95,9 @@ public class PriorityActivity extends AppCompatActivity {
 
         initAssets();
         renderSpaces();
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     private void initAssets() {
@@ -106,23 +129,25 @@ public class PriorityActivity extends AppCompatActivity {
                 check(four);
 
                 String request = ("https://carby1.herokuapp.com/api?" +
-                        "origin="+origin+"" +
-                        "&destination="+dest+"" +
-                        "&one="+one+"" +
-                        "&two="+two+"" +
-                        "&three="+three+"" +
-                        "&four="+four);
+                        "origin=" + origin + "" +
+                        "&destination=" + dest + "" +
+                        "&one=" + one + "" +
+                        "&two=" + two + "" +
+                        "&three=" + three + "" +
+                        "&four=" + four);
 
-                URL url;
-                HttpURLConnection urlConnection = null;
                 try {
-                  InputStream input = new URL(request).openStream();
-                  Map<String, String> map = new Gson().fromJson(new InputStreamReader(input, "UTF-8"), new TypeToken<Map<String, String>>(){}.getType());
+                    //JSONObject json = readJsonFromUrl(request);
+                    JSONObject json = new JSONObject(IOUtils.toString(new URL(request), Charset.forName("UTF-8")));
+                    //print the car json object to the console for testing.
+                    System.out.println("Here is the car data: " + json.getJSONObject("car"));
+                    System.out.println("The walking data: " + json.getJSONObject("walking"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                catch(Exception e){
-                  System.out.println(e.toString());
-                }
-                Toast.makeText(getApplicationContext(), request, Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), request, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -176,7 +201,28 @@ public class PriorityActivity extends AppCompatActivity {
         box4C.setOnDragListener(new MyDragListener('h'));
     }
 
-    private void renderSpaces(){
+    public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
+        InputStream is = new URL(url).openStream();
+        try {
+            BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+            String jsonText = readAll(rd);
+            JSONObject json = new JSONObject(jsonText);
+            return json;
+        } finally {
+            is.close();
+        }
+    }
+
+    private static String readAll(Reader rd) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        int cp;
+        while ((cp = rd.read()) != -1) {
+            sb.append((char) cp);
+        }
+        return sb.toString();
+    }
+
+    private void renderSpaces() {
         long downTime = SystemClock.uptimeMillis();
         long eventTime = SystemClock.uptimeMillis() + 100;
         float x = 230.0f;
@@ -192,41 +238,74 @@ public class PriorityActivity extends AppCompatActivity {
                 metaState);
     }
 
-    private void check(String s){
-        if (s.equals("null")){
+    private void check(String s) {
+        if (s.equals("null")) {
             //do something
         }
     }
 
-    private String getPopulatedString(){
-        return ("Populated fields are " + populated[0] + " " +populated[1] + " " +populated[2]+ " " +populated[3]);
+    private String getPopulatedString() {
+        return ("Populated fields are " + populated[0] + " " + populated[1] + " " + populated[2] + " " + populated[3]);
     }
 
-    private String charToString(char z){
-        if(z == 'e'){
+    private String charToString(char z) {
+        if (z == 'e') {
             return "green";
-        }
-        else if(z == 'f'){
+        } else if (z == 'f') {
             return "cost";
-        }
-        else if(z == 'g'){
+        } else if (z == 'g') {
             return "distance";
-        }
-        else if(z == 'h'){
+        } else if (z == 'h') {
             return "time";
-        }
-        else return "null";
+        } else return "null";
+    }
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("Priority Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
     }
 
     // This defines your touch listener
     private final class MyTouchListener implements OnTouchListener {
         char act;
-        public MyTouchListener (char act){
+
+        public MyTouchListener(char act) {
             this.act = act;
             active = act;
             try {
                 //Toast.makeText(getApplicationContext(), " "+active+" ", Toast.LENGTH_SHORT).show();
-            }catch (Exception e){
+            } catch (Exception e) {
 
             }
         }
@@ -255,7 +334,7 @@ public class PriorityActivity extends AppCompatActivity {
         char box;
         boolean first = true;
 
-        private MyDragListener (char dest){
+        private MyDragListener(char dest) {
             this.prior = active;
             this.box = dest;
         }
@@ -298,9 +377,9 @@ public class PriorityActivity extends AppCompatActivity {
             return true;
         }
 
-        private void setBackground(View v){
+        private void setBackground(View v) {
             Drawable bg;
-            switch(box){
+            switch (box) {
                 case 'e':
                     bg = getResources().getDrawable(R.drawable.dashbox1);
                     v.setBackgroundDrawable(bg);
@@ -323,19 +402,19 @@ public class PriorityActivity extends AppCompatActivity {
             }
         }
 
-        private void update(){
-            for(int i = 0; i < populated.length; i++){
-                if (populated[i] == prior){
-                    for (int j = 0; j < i; j++){
-                        if(populated[i] == populated[j]){
+        private void update() {
+            for (int i = 0; i < populated.length; i++) {
+                if (populated[i] == prior) {
+                    for (int j = 0; j < i; j++) {
+                        if (populated[i] == populated[j]) {
                             char temp = populated[i];
                             populated[i] = populated[j];
                             populated[j] = temp;
                             return;
                         }
                     }
-                    for (int j = i+1; j < populated.length; j++){
-                        if(populated[i] == populated[j]){
+                    for (int j = i + 1; j < populated.length; j++) {
+                        if (populated[i] == populated[j]) {
                             char temp = populated[i];
                             populated[i] = populated[j];
                             populated[j] = temp;
