@@ -1,4 +1,5 @@
 from flask import *
+from algorithm import algo
 import sys
 sys.path.insert(0, '.')
 import config, json, traceback, requests
@@ -12,4 +13,4 @@ def main_route():
         origin = request.args.get('origin'); destination = request.args.get('destination')
         one = request.args.get('one'); two = request.args.get('two')
         three = request.args.get('three'); four = request.args.get('four')
-        return "YEAH"
+        return algo.shotCaller(origin, destination)

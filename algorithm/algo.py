@@ -13,7 +13,7 @@ def shotCaller(origin, destination):
     #we're going to return a big list object.
     bigData = {'car': processInput(origin, destination, 'driving'), 'bike': processInput(origin, destination, 'bicycling'),
         'walk': processInput(origin, destination, 'walking'), 'transit': processInput(origin, destination, 'transit')}
-    print(bigData)
+    return json.dumps(bigData)
 
 def processInput(origin, destination, type):
     '''

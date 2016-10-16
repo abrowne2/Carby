@@ -18,11 +18,12 @@ Arbitrary Bus (Transit)
 
 #for the car option and the transit option
 def computeGas(lat, lon, dist, type):
-    gasResponse = requests.get('http://na-api.mobile.inrix.com/MobileGateway/Mobile.ashx?fuelType=regular'+
-                               '&sortBy=price&isAdhoc=true&action=Mobile.GasStation.Radius&Center='+ str(lat) +'%7C'+ str(lon)
-                               +'&Radius=10' +'&token=qbtBwGgjx*qvmbQupKFMWhYJJbCCbrT8GdTqPx2hlV8%7C')
-
-    Regular = BeautifulSoup(gasResponse.text, "html.parser").find(attrs={"type": "Regular"})['price']
+    # gasResponse = requests.get('http://na-api.mobile.inrix.com/MobileGateway/Mobile.ashx?fuelType=regular'+
+    #                            '&sortBy=price&isAdhoc=true&action=Mobile.GasStation.Radius&Center='+ str(lat) +'%7C'+ str(lon)
+    #                            +'&Radius=10' +'&token=qbtBwGgjx*qvmbQupKFMWhYJJbCCbrT8GdTqPx2hlV8%7C')
+    #
+    # Regular = BeautifulSoup(gasResponse.text, "html.parser").find(attrs={"type": "Regular"})['price']
+    Regular = '2.224'
 
     #gas dictionary that we will return.
     gas = {}
@@ -41,6 +42,9 @@ def computeGas(lat, lon, dist, type):
         #number of refuels, if greater than 1.
         gas['refuel'] = refuels if refuels >= 1.0 else 0
         gas['green'] = green.greenScore(refuels, dist, type)
+        #how many trees needed to plant
+        gas['trees'] = 0.0584 * dist
+
     elif type == 'transit':
         tank = 65; mpg = 38.3 / 6.5
 
@@ -51,7 +55,11 @@ def computeGas(lat, lon, dist, type):
         #build the gas dict..
         gas['cost'] = (tank * float(Regular)) * refuels
         gas['refuel'] = refuels if refuels >= 1.0 else 0
+        #compute the green score.
         gas['green'] = green.greenScore(refuels, dist, type)
+        #how many trees you would need to plant (0.0584 per mile)
+        gas['trees'] = 0.0584 * dist
+
     elif type == 'walking':
         gas['green'] = green.greenScore(0, dist, type)
     elif type == 'bicycling':
