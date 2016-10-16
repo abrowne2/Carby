@@ -47,7 +47,7 @@ def processInput(origin, destination, type):
         #the first data should be that of the total distance, time, and cost required.
         transportation.append({'distance': dist, 'time':
             data['routes'][0]['legs'][0]['duration']['text'], 'cost':
-            cost.computeGas(lat, lon, float(dist.replace("mi", "").strip()), type) if computeGas else 0})
+            cost.computeGas(lat, lon, float(dist.replace("mi", "").strip()), type)})
 
         #iterate over the response, creating individual dictionaries for each step.
         for steps in data['routes'][0]['legs'][0]['steps']:

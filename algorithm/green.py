@@ -11,5 +11,10 @@ https://carbonfund.org/how-we-calculate/
 #emission_factor = 8.89 kg / gallon
 
 #green score algorithm
-def greenScore(gallons):
-    return 8.89 * gallons
+def greenScore(gallons, dist, type):
+    if type == 'driving' or 'transit':
+        return 8.89 * gallons
+    elif type == 'bicycling':
+        return 0.012 * dist
+    elif type == 'walking':
+        return 0.029 * dist

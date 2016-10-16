@@ -40,7 +40,7 @@ def computeGas(lat, lon, dist, type):
         gas['cost'] = (tank * float(Regular)) * refuels
         #number of refuels, if greater than 1.
         gas['refuel'] = refuels if refuels >= 1.0 else 0
-        gas['green'] = green.greenScore()
+        gas['green'] = green.greenScore(refuels, dist, type)
     elif type == 'transit':
         tank = 65; mpg = 38.3 / 6.5
 
@@ -48,7 +48,14 @@ def computeGas(lat, lon, dist, type):
         #number of refuels
         refuels = dist / on_tank
 
-
+        #build the gas dict..
         gas['cost'] = (tank * float(Regular)) * refuels
         gas['refuel'] = refuels if refuels >= 1.0 else 0
+        gas['green'] = green.greenScore(refuels, dist, type)
+    elif type == 'walking':
+        gas['green'] = green.greenScore(0, dist, type)
+    elif type == 'bicycling':
+        gas['green'] = green.greenScore(0, dist, type)
+
+    #gas can also contain the green score...
     return gas
