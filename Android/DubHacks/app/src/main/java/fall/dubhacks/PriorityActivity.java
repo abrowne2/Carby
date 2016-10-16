@@ -20,6 +20,7 @@ import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -93,11 +94,20 @@ public class PriorityActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_priority);
 
-        initAssets();
-        renderSpaces();
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+        if (SDK_INT > 8)
+        {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            //your codes here
+            initAssets();
+            renderSpaces();
+            // ATTENTION: This was auto-generated to implement the App Indexing API.
+            // See https://g.co/AppIndexing/AndroidStudio for more information.
+            client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
+        }
     }
 
     private void initAssets() {
@@ -128,14 +138,8 @@ public class PriorityActivity extends AppCompatActivity {
                 String four = charToString(populated[3]);
                 check(four);
 
-                String request = ("https://carby1.herokuapp.com/api?" +
-                        "origin=" + origin + "" +
-                        "&destination=" + dest + "" +
-                        "&one=" + one + "" +
-                        "&two=" + two + "" +
-                        "&three=" + three + "" +
-                        "&four=" + four);
-
+                String request = ("https://carby1.herokuapp.com/api?origin=" + origin + "&destination=" +
+                        dest + "&one=" + one + "&two=" + two + "&three=" + three + "&four=" + four);
                 try {
                     //JSONObject json = readJsonFromUrl(request);
                     JSONObject json = new JSONObject(IOUtils.toString(new URL(request), Charset.forName("UTF-8")));
