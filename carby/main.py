@@ -14,3 +14,8 @@ def main_route():
         one = request.args.get('one'); two = request.args.get('two')
         three = request.args.get('three'); four = request.args.get('four')
         return returnJSON(origin, destination)
+
+@main.after_request
+def apply_json(response):
+    response.headers['content-type'] = 'application/json'
+    return response

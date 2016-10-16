@@ -1,5 +1,13 @@
 package fall.dubhacks;
 
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.URL;
+import java.net.URLConnection;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.Intent;
@@ -102,6 +110,15 @@ public class PriorityActivity extends AppCompatActivity {
                         "&three="+three+"" +
                         "&four="+four);
 
+                URL url;
+                HttpURLConnection urlConnection = null;
+                try {
+                  InputStream input = new URL(request).openStream();
+                  Map<String, String> map = new Gson().fromJson(new InputStreamReader(input, "UTF-8"), new TypeToken<Map<String, String>>(){}.getType());
+                }
+                catch(Exception e){
+                  System.out.println(e.toString());
+                }
                 Toast.makeText(getApplicationContext(), request, Toast.LENGTH_LONG).show();
             }
         });
