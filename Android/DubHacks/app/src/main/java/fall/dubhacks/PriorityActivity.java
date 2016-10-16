@@ -25,6 +25,7 @@ import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.DragEvent;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -363,6 +364,7 @@ public class PriorityActivity extends AppCompatActivity {
                     LinearLayout container = (LinearLayout) v;
                     container.removeAllViews();
                     container.addView(view);
+                    container.setGravity(Gravity.CENTER);
                     view.setVisibility(View.VISIBLE);
                     setBackground(v);
                     break;

@@ -40,7 +40,7 @@
             android:layout_gravity="center"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:background="@drawable/greencar"
-            android:id="@+id/launch" />
+            android:id="@+id/launch"
+            android:background="@drawable/greencar"/>
     </LinearLayout>
 </RelativeLayout>
