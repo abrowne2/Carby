@@ -1,6 +1,6 @@
 import sys
-sys.path.insert(0, 'algorithm/')
-from algorithm import algo
+sys.path.insert(0, '.')
+from algorithm import algorithm
 
 def returnJSON(orig, dest):
-    return algo.shotCaller(orig, dest)
+    return algorithm.shotCaller(orig, dest)

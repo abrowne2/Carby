@@ -1,7 +1,7 @@
 from flask import *
-import config, json, traceback, requests
+import config, json, traceback, requests, sys
+sys.path.insert(0, '.')
 from runner import returnJSON
-
 main = Blueprint('main', __name__)
 
 @main.route('/api', methods=['GET'])
