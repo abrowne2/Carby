@@ -1,4 +1,4 @@
-from algorithm.cost import computeGas
+import algorithm.cost
 import json, requests
 
 #google maps direction api key
