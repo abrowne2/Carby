@@ -12,4 +12,3 @@ def main_route():
     if request.method == 'GET':
         origin = request.args.get('origin')
         destination = request.args.get('destination')
-        return "Origin: " + origin + ', Destination: ' + destination
