@@ -1,6 +1,5 @@
 import json, requests
 
-
 #google maps direction api key
 api_key = 'AIzaSyDHJZtEP1pvZuQfC6_I8gGMB1gBK9eXhHI'
 
@@ -11,7 +10,9 @@ def shotCaller(origin, destination):
     :return: JSON for our app to understand
     '''
     #we're going to return a big list object.
-    pass
+    bigData = {'car': processInput(origin, destination, 'driving'), 'bike': processInput(origin, destination, 'bicycling'),
+        'walk': processInput(origin, destination, 'walking'), 'transit': processInput(origin, destination, 'transit')}
+    print(bigData)
 
 def processInput(origin, destination, type):
     '''
@@ -20,24 +21,27 @@ def processInput(origin, destination, type):
     '''
     try:
         r = requests.get('https://maps.googleapis.com/maps/api/directions/json?origin=' + origin + '&destination=' +\
-                         destination + '&travelMode=' + type + '&key=' + api_key)
+                         destination + '&departure_time=now' + '&mode=' + type + '&key=' + api_key)
     except requests.exceptions.ConnectionError as e:
         message = 'Connection to {0} failed. \n {1}'
         print(message.format(('Origin: ' + origin + ', Destination: ' + destination), e.args[0].args[1].args[1]))
 
     data = json.loads(r.text)
 
-    #nested data access
+    #create the transport list.
     transportation = []
-    #append the total distance taken and the duration of time
-    transportation.append({'distance': data['routes'][0]['legs'][0]['distance']['text'], 'time':
-        data['routes'][0]['legs'][0]['duration']['text']})
+    #ensure that the data we're about to parse actually exists...
+    #we might not have a public transit route, for example..
+    if(data['status'] != 'ZERO_RESULTS'):
+        #append the total distance taken and the duration of time
+        transportation.append({'distance': data['routes'][0]['legs'][0]['distance']['text'], 'time':
+            data['routes'][0]['legs'][0]['duration']['text']})
 
-    #iterate over the response, creating individual dictionaries for each step.
-    for steps in data['routes'][0]['legs'][0]['steps']:
-        transportation.append({'step': maneuver(steps['maneuver']) if 'maneuver' in steps else '',
-                        'dist': steps['distance'], 'time': steps['duration'], 'mode': steps['travel_mode'],
-                        'words': stepParse(steps['html_instructions'])})
+        #iterate over the response, creating individual dictionaries for each step.
+        for steps in data['routes'][0]['legs'][0]['steps']:
+            transportation.append({'step': maneuver(steps['maneuver']) if 'maneuver' in steps else '',
+                            'dist': steps['distance'], 'time': steps['duration'], 'mode': steps['travel_mode'],
+                            'words': stepParse(steps['html_instructions'])})
     return transportation
 
 #use stepParse to parse the html instruction in the API response
@@ -53,4 +57,4 @@ def maneuver(step):
 def computeGreenScore():
     pass
 
-processInput("9605 Tanager Drive, Chardon, OH","437 Sumner Street, Akron, OH")
+shotCaller("9605 Tanager Drive, Chardon, OH","437 Sumner Street, Akron, OH")
