@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+from algorithm import green
 import requests
 
 '''
@@ -39,10 +40,9 @@ def computeGas(lat, lon, dist, type):
         gas['cost'] = (tank * float(Regular)) * refuels
         #number of refuels, if greater than 1.
         gas['refuel'] = refuels if refuels >= 1.0 else 0
+        gas['green'] = green.greenScore()
     elif type == 'transit':
-        #Change 40 to some value.
-        avg_num_riders = 15
-        tank = 65; mpg = 38.3 / avg_num_riders
+        tank = 65; mpg = 38.3 / 6.5
 
         on_tank = tank * mpg
         #number of refuels
@@ -51,5 +51,4 @@ def computeGas(lat, lon, dist, type):
 
         gas['cost'] = (tank * float(Regular)) * refuels
         gas['refuel'] = refuels if refuels >= 1.0 else 0
-
     return gas
