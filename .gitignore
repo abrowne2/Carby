@@ -1,0 +1,6 @@
+#gitignore for the android app
+/build
+/libs
+app.iml
+build.gradle
+proguard-rules.pro
