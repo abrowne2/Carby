@@ -3,6 +3,7 @@ import config
 from carby.main import main
 
 app = Flask(__name__)
+
 # Register the blueprint
 app.register_blueprint(main)
 
