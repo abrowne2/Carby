@@ -60,10 +60,8 @@ def computeGas(lat, lon, dist, type):
         gas['trees'] = 0.0584 * dist
 
     elif type == 'walking':
-        print(dist)
         gas['green'] = greenScore(0, dist, type)
     elif type == 'bicycling':
-        print(dist)
         gas['green'] = greenScore(0, dist, type)
 
     #gas can also contain the green score...
