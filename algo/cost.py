@@ -1,6 +1,4 @@
-from bs4 import BeautifulSoup
-import requests
-import algorithm.green
+from algo.green import greenScore
 '''
 https://truecostblog.com/2010/05/27/fuel-efficiency-modes-of-transportation-ranked-by-mpg/
 

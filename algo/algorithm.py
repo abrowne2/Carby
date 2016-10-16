@@ -1,7 +1,6 @@
-import sys
-sys.path.insert(0, './algorithm')
-import algorithm.cost
 import json, requests
+from algo.cost import computeGas
+
 #google maps direction api key
 api_key = 'AIzaSyDHJZtEP1pvZuQfC6_I8gGMB1gBK9eXhHI'
 
@@ -48,7 +47,7 @@ def processInput(origin, destination, type):
         #the first data should be that of the total distance, time, and cost required.
         transportation.append({'distance': dist, 'time':
             data['routes'][0]['legs'][0]['duration']['text'], 'cost':
-            algorithm.cost.computeGas(lat, lon, float(dist.replace("mi", "").strip()), type)})
+            computeGas(lat, lon, float(dist.replace("mi", "").strip()), type)})
 
         #iterate over the response, creating individual dictionaries for each step.
         for steps in data['routes'][0]['legs'][0]['steps']:
