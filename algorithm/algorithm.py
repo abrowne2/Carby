@@ -1,6 +1,6 @@
 import sys
 sys.path.insert(1, '.')
-from .cost import computeGas
+from algorithm.cost import computeGas
 import json, requests
 
 #google maps direction api key

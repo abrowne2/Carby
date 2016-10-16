@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import sys
 sys.path.insert(1, '.')
 import requests
-from .green import greenScore
+from algorithm.green import greenScore
 '''
 https://truecostblog.com/2010/05/27/fuel-efficiency-modes-of-transportation-ranked-by-mpg/
 
