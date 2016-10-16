@@ -47,9 +47,11 @@ def processInput(origin, destination, type):
         #the first data should be that of the total distance, time, and cost required.
         transportation = {'distance': dist, 'time':
             data['routes'][0]['legs'][0]['duration']['text'], 'cost':
-            computeGas(lat, lon, float(dist.replace("mi", "").strip()), type)} 
+            computeGas(lat, lon, float(dist.replace("mi", "").strip()), type)}
 
         #iterate over the response, creating individual dictionaries for each step.
+        #if we want data for the entire step by step process and the maneuver:
+
         # for steps in data['routes'][0]['legs'][0]['steps']:
         #     transportation.append({'step': maneuver(steps['maneuver']) if 'maneuver' in steps else '',
         #                     'dist': steps['distance'], 'time': steps['duration'], 'mode': steps['travel_mode'],

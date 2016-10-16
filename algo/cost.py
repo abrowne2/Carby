@@ -20,7 +20,9 @@ def computeGas(lat, lon, dist, type):
     #                            +'&Radius=10' +'&token=qbtBwGgjx*qvmbQupKFMWhYJJbCCbrT8GdTqPx2hlV8%7C')
     #
     # Regular = BeautifulSoup(gasResponse.text, "html.parser").find(attrs={"type": "Regular"})['price']
-    Regular = '2.224'
+
+    #we'll pull this later.
+    Regular = '2.224' #daily gas value for usa
 
     #gas dictionary that we will return.
     gas = {}
