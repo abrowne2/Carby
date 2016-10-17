@@ -1,6 +1,6 @@
-![alt tag](https://github.com/abrowne2/Carby/blob/master/screenshots/splash.png =250x250)
-![alt tag](https://github.com/abrowne2/Carby/blob/master/screenshots/priority.png =250x250)
-![alt tag](https://github.com/abrowne2/Carby/blob/master/screenshots/visualization.png =250x250)
+![alt tag](https://github.com/abrowne2/Carby/blob/master/screenshots/splash.png)
+![alt tag](https://github.com/abrowne2/Carby/blob/master/screenshots/priority.png)
+![alt tag](https://github.com/abrowne2/Carby/blob/master/screenshots/visualization.png)
 
 1. Take input from user (Starting point, destination, priority rank for Carbon-footprint, distance, cost, time)
 
