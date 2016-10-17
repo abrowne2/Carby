@@ -1,3 +1,7 @@
+![alt tag](https://github.com/abrowne2/Carby/blob/master/screenshots/splash.png =250x250)
+![alt tag](https://github.com/abrowne2/Carby/blob/master/screenshots/priority.png =250x250)
+![alt tag](https://github.com/abrowne2/Carby/blob/master/screenshots/visualization.png =250x250)
+
 1. Take input from user (Starting point, destination, priority rank for Carbon-footprint, distance, cost, time)
 
 2. Make request to Maps api to get information about the list of routes (including ferries, flights, drives, walks, etc).
@@ -23,7 +27,3 @@ bottom: Search another route.
 3. Push data of the top route to the user's pie chart information page. 
 
 after results are generated and pushed to the screen for the user to see, an option at the bottom of the screen is used to help users select a different priority ranking for a different travel route. 
-
-![alt tag](https://github.com/abrowne2/Carby/blob/master/screenshots/splash.png)
-![alt tag](https://github.com/abrowne2/Carby/blob/master/screenshots/priority.png)
-![alt tag](https://github.com/abrowne2/Carby/blob/master/screenshots/visualization.png)
